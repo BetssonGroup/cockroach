@@ -962,9 +962,10 @@ func (ctx *Context) grpcDialRaw(
 	// ~second range.
 	backoffConfig := backoff.DefaultConfig
 	backoffConfig.MaxDelay = maxBackoff
+	minConnectTimeout := 20 * time.Millisecond
 	dialOpts = append(dialOpts, grpc.WithConnectParams(grpc.ConnectParams{
-		Backoff: backoffConfig,
-		MinConnectTimeout: 20 * time.Millisecond
+		Backoff:           backoffConfig,
+		MinConnectTimeout: minConnectTimeout,
 	}))
 	dialOpts = append(dialOpts, grpc.WithKeepaliveParams(clientKeepalive))
 	dialOpts = append(dialOpts,
